@@ -10,7 +10,7 @@ let nodeObjArr = [];
 
 let alphabetArr = [];
 let startState = "";
-let finalState = "";
+let finalState = [];
 let nodeArr = [];
 
 document.addEventListener("focusout", (e) => {
@@ -35,7 +35,7 @@ document.addEventListener("focusout", (e) => {
       break;
     }
     case "final-state": {
-      finalState = e.target.value.trim();
+      finalState = e.target.value.trim().split(" ");
       break;
     }
   }
@@ -73,6 +73,17 @@ function findNode(array, searchValue) {
   throw Error("Node could not be found");
 }
 
+function findNodes(array, searchValue = []) {
+  let result = [];
+  for (let i = 0; i < array.length; i++) {
+    for (let j = 0; j < searchValue.length; j++) {
+      if (array[i].val == searchValue[j]) result.push(array[i]);
+    }
+  }
+  if (result.length === 0) throw Error("Nodes could not be found");
+  return result;
+}
+
 let connectionObj = {"s0": {0: "s0", 1: "s1"}, "s1": {0: "s2", 1: "s0"}, "s2": {0: "s1", 1: "s2"}};
 
 function tableToObject(table) {
@@ -97,8 +108,8 @@ function tableToObject(table) {
 
 
 function generateResult() {
-  // const data = tableToObject(table);
-  const data = connectionObj;
+  const data = tableToObject(table);
+  // const data = connectionObj;
   for (const node in data) {
     let sourceNode = findNode(nodeObjArr, node);
     for (const edge in data[node]) {
@@ -108,7 +119,7 @@ function generateResult() {
     }
   }
 
-  let a = new DFA(findNode(nodeObjArr, startState), nodeObjArr, findNode(nodeObjArr, finalState));
+  let a = new DFA(findNode(nodeObjArr, startState), nodeObjArr, findNodes(nodeObjArr, finalState));
 
   const inputElement = document.querySelectorAll("#test-string-container input");
   inputElement.forEach((element) => {

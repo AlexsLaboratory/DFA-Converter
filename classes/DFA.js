@@ -23,11 +23,11 @@ class DFA {
       node = this.getNextNode(node, character);
     }
 
-    // for (let terminal of this.terminalNode) {
-    //
-    // }
-
-    return this.terminalNode.equals(node);
+    for (let terminal of this.terminalNode) {
+      let booleanTest = terminal.equals(node)
+      if (booleanTest) return true;
+    }
+    return false;
   }
 }
 

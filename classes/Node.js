@@ -8,16 +8,6 @@ class Node {
     this.links.push(link);
   }
 
-  toString() {
-    let node = "(%s):\n" % this.val;
-
-    for (let i = i; i < this.links.length; i++) {
-      let link = this.links[i];
-      node += `\t${link}\n`
-    }
-    return node;
-  }
-
   equals(node) {
     let check = this.val === node.val;
 
