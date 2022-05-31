@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="main.css">
+  <script defer type="module" src="main.js"></script>
+  <script defer type="module" src="table.js"></script>
+</head>
+<body>
+<label for="possible-states">Q: </label><input type="text" name="possible-states" id="possible-states">
+<label for="alphabet">Σ: </label><input type="text" name="alphabet" id="alphabet">
+<h4>δ: </h4>
+<table class="tg">
+  <colgroup>
+    <col style="width: auto;">
+    <col style="width: auto;">
+  </colgroup>
+  <thead>
+  <tr>
+    <th colspan="1" class="tg-c3ow"><span>Node</span></th>
+    <th colspan="1000" class="tg-c3ow"><span>Edges</span></th>
+  </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+<label for="start-state">q0: </label><input type="text" name="start-state" id="start-state">
+<label for="final-state">F: </label><input type="text" name="final-state" id="final-state">
+<h2>String Testing:</h2>
+<div id="test-string-container">
+  <div class="input-item-container">
+    <label for="string-1">Test String 1: </label><input type="text" id="string-1">
+  </div>
+</div>
+<button type="button" id="new-test-button">New Test</button>
+<button type="submit" id="run-dfa">Run</button>
+</body>
+</html>

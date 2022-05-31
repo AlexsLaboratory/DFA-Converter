@@ -1,0 +1,40 @@
+.tg {
+  border-collapse: collapse;
+}
+
+.tg td {
+  border: 1px solid black;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  overflow: hidden;
+  padding: 10px 5px;
+  word-break: normal;
+  text-align: center;
+}
+
+.tg th {
+  border: 1px solid black;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  overflow: hidden;
+  padding: 10px 5px;
+  word-break: normal;
+}
+
+.tg .tg-c3ow {
+  border-color: inherit;
+  text-align: center;
+  vertical-align: top;
+  font-weight: bold;
+}
+
+.tg--subtable {
+  height: 100%;
+  width: 100%;
+}
+
+.tg--subtable td {
+  padding: 0;
+  border: none;
+}
