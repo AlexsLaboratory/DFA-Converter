@@ -130,7 +130,4 @@ function generateResult() {
       element.style.border = "2px solid red";
     }
   });
-  // console.log(a);
-  console.log(a.accepts("1011101"));
-  console.log(a.accepts("10111011"));
 }

@@ -3,9 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <script defer type="text/javascript" src="https://unpkg.com/vis-data@latest/peer/umd/vis-data.min.js"></script>
+  <script defer type="text/javascript" src="https://unpkg.com/vis-network@latest/peer/umd/vis-network.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/vis-network/styles/vis-network.min.css" />
   <link rel="stylesheet" href="main.css">
   <script defer type="module" src="main.js"></script>
   <script defer type="module" src="table.js"></script>
+  <script defer src="functions/generate-graph.js"></script>
 </head>
 <body>
 <label for="possible-states">Q: </label><input type="text" name="possible-states" id="possible-states">
@@ -35,5 +39,6 @@
 </div>
 <button type="button" id="new-test-button">New Test</button>
 <button type="submit" id="run-dfa">Run</button>
+<div id="mynetwork"></div>
 </body>
 </html>

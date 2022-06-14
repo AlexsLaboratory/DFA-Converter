@@ -12,5 +12,7 @@
     <orderEntry type="library" name="d3.v3" level="application" />
     <orderEntry type="library" name="d3.v4" level="application" />
     <orderEntry type="library" name="d3-selection-multi.v1" level="application" />
+    <orderEntry type="library" name="vis-network" level="application" />
+    <orderEntry type="library" name="vis-data" level="application" />
   </component>
 </module>
