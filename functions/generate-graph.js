@@ -3,6 +3,18 @@ function getId(string) {
   return regex.exec(string)[0];
 }
 
+function canvasArrow(context, fromx, fromy, tox, toy) {
+  let headlen = 10; // length of head in pixels
+  let dx = tox - fromx;
+  let dy = toy - fromy;
+  let angle = Math.atan2(dy, dx);
+  context.moveTo(fromx, fromy);
+  context.lineTo(tox, toy);
+  context.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+  context.moveTo(tox, toy);
+  context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+}
+
 function generateGraph(nodesArr, edgesArr, data, startState, endState = []) {
   let i = 0;
   for (const node in data) {
@@ -11,69 +23,16 @@ function generateGraph(nodesArr, edgesArr, data, startState, endState = []) {
       nodesArr.push({
         id: nodeId,
         label: node,
-        color: {
-          background: "red"
-        },
-        font: {
-          color: "white"
-        },
         shape: "custom",
         ctxRenderer: ({ctx, id, x, y, state: {selected, hover}, style, label}) => {
-          // do some math here
           const r = style.size;
-          const width = r * 2;
-          const height = r * 2;
+          const diameter = r * 2;
           return {
-            // bellow arrows
-            // primarily meant for nodes and the labels inside of their boundaries
             drawNode() {
               ctx.beginPath();
-              // ctx.strokeStyle = "#3885EB";
-              ctx.strokeStyle = "black";
-              ctx.translate(x, y);
-              // ctx.fillStyle = "#97C2FC";
-              ctx.fillStyle = "red";
-              ctx.arc(0, 0, r, 0, Math.PI * 2, true); // Outer circle
-              ctx.fill();
+              canvasArrow(ctx, x - r + 75, y - r + 75, x + r, y + r);
+              ctx.strokeStyle = "red";
               ctx.stroke();
-              ctx.moveTo(0, 0);
-              ctx.beginPath();
-              ctx.arc(0, 0, r * .5, 0, Math.PI * 2, true);  // Inner circle
-              ctx.fill();
-              ctx.stroke();
-              ctx.lineWidth = 2;
-              ctx.beginPath();
-              ctx.fillStyle = "white";
-              ctx.textAlign = "center";
-              const textWidth = ctx.measureText(label).width;
-              ctx.fillText(label, (r * .25) - (textWidth * .5), r * .0625);
-            },
-            drawExternalLabel() {
-            },
-            nodeDimensions: {width, height},
-          };
-        }
-      });
-    } else if (node != startState && endState.includes(node)) {
-      nodesArr.push({
-        id: nodeId,
-        label: node,
-        color: {
-          background: "red"
-        },
-        font: {
-          color: "white"
-        },
-        shape: "custom",
-        ctxRenderer: ({ctx, id, x, y, state: {selected, hover}, style, label}) => {
-          // do some math here
-          const r = style.size;
-          const width = r * 2;
-          const height = r * 2;
-          return {
-            // bellow arrows
-            // primarily meant for nodes and the labels inside of their boundaries
-            drawNode() {
               ctx.beginPath();
               ctx.strokeStyle = "#3885EB";
               // ctx.strokeStyle = "black";
@@ -85,10 +44,10 @@ function generateGraph(nodesArr, edgesArr, data, startState, endState = []) {
               ctx.stroke();
               ctx.moveTo(0, 0);
               ctx.beginPath();
+              ctx.lineWidth = 2;
               ctx.arc(0, 0, r * .5, 0, Math.PI * 2, true);  // Inner circle
               ctx.fill();
               ctx.stroke();
-              ctx.lineWidth = 2;
               ctx.beginPath();
               ctx.fillStyle = "black";
               ctx.textAlign = "center";
@@ -97,7 +56,42 @@ function generateGraph(nodesArr, edgesArr, data, startState, endState = []) {
             },
             drawExternalLabel() {
             },
-            nodeDimensions: {width, height},
+            nodeDimensions: {diameter, diameter},
+          };
+        }
+      });
+    } else if (node != startState && endState.includes(node)) {
+      nodesArr.push({
+        id: nodeId,
+        label: node,
+        shape: "custom",
+        ctxRenderer: ({ctx, id, x, y, state: {selected, hover}, style, label}) => {
+          const r = style.size;
+          const diameter = r * 2;
+          return {
+            drawNode() {
+              ctx.beginPath();
+              ctx.strokeStyle = "#3885EB";
+              ctx.translate(x, y);
+              ctx.fillStyle = "#97C2FC";
+              ctx.arc(0, 0, r, 0, Math.PI * 2, true); // Outer circle
+              ctx.fill();
+              ctx.stroke();
+              ctx.moveTo(0, 0);
+              ctx.beginPath();
+              ctx.lineWidth = 2;
+              ctx.arc(0, 0, r * .5, 0, Math.PI * 2, true);  // Inner circle
+              ctx.fill();
+              ctx.stroke();
+              ctx.beginPath();
+              ctx.fillStyle = "black";
+              ctx.textAlign = "center";
+              const textWidth = ctx.measureText(label).width;
+              ctx.fillText(label, (r * .25) - (textWidth * .5), r * .0625);
+            },
+            drawExternalLabel() {
+            },
+            nodeDimensions: {diameter, diameter},
           };
         }
       })
@@ -106,11 +100,42 @@ function generateGraph(nodesArr, edgesArr, data, startState, endState = []) {
         id: nodeId,
         label: node,
         color: {
-          background: "red"
+          background: "red",
+          highlight: "red"
         },
         font: {
           color: "white"
         },
+        shape: "custom",
+        ctxRenderer: ({ctx, id, x, y, state: {selected, hover}, style, label}) => {
+          const r = style.size;
+          const diameter = r * 2;
+          return {
+            drawNode() {
+              ctx.beginPath();
+              canvasArrow(ctx, x - r + 75, y - r + 75, x + r, y + r);
+              ctx.strokeStyle = "red";
+              ctx.stroke();
+              ctx.beginPath();
+              ctx.strokeStyle = "#3885EB";
+              ctx.translate(x, y);
+              ctx.fillStyle = "#97C2FC";
+              ctx.arc(0, 0, r, 0, Math.PI * 2, true);
+              ctx.fill();
+              ctx.stroke();
+              ctx.moveTo(0, 0);
+              ctx.beginPath();
+              ctx.fillStyle = "black";
+              ctx.textAlign = "center";
+              const textWidth = ctx.measureText(label).width;
+              ctx.fillText(label, (r * .25) - (textWidth * .5), r * .0625);
+            },
+            drawExternalLabel() {
+            },
+            nodeDimensions: {diameter, diameter},
+          };
+        }
+
       })
     } else {
       nodesArr.push({id: nodeId, label: node});
@@ -132,13 +157,4 @@ function generateGraph(nodesArr, edgesArr, data, startState, endState = []) {
   }
 }
 
-let nodes = [];
-let edges = [];
-let connectionObj = {"s0": {0: "s0", 1: "s1"}, "s1": {0: "s2", 1: "s0"}, "s2": {0: "s1", 1: "s2"}};
-generateGraph(nodes, edges, connectionObj, "s0", ["s2"]);
-let container = document.getElementById("mynetwork");
-let data = {
-  nodes: nodes,
-  edges: edges
-};
-let network = new vis.Network(container, data, {});
+export {generateGraph};

@@ -2,6 +2,7 @@ import {Node} from "./classes/Node.js";
 import {DFA} from "./classes/DFA.js";
 import {Edge} from "./classes/Edge.js";
 import {addRow} from "./table.js";
+import {generateGraph} from "./functions/generate-graph.js";
 
 const table = document.querySelector(".tg");
 const tableBody = table.querySelector("tbody");
@@ -103,6 +104,18 @@ function tableToObject(table) {
     }
     nodeObj[currentNode] = subObj;
   }
+
+  let nodes = [];
+  let edges = [];
+  // let connectionObj = {"s0": {0: "s0", 1: "s1"}, "s1": {0: "s2", 1: "s0"}, "s2": {0: "s1", 1: "s2"}};
+  generateGraph(nodes, edges, nodeObj, startState, finalState);
+  let container = document.getElementById("mynetwork");
+  let data = {
+    nodes: nodes,
+    edges: edges
+  };
+  let network = new vis.Network(container, data, {});
+
   return nodeObj;
 }
 
